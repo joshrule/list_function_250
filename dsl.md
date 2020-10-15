@@ -73,19 +73,29 @@ This section contains a table of symbols in the DSL, along with their type signa
 <td>Opens a lambda expression.</td>
 </tr>
 <tr>
-<td><code>0..99</code></td>
+<td><code>0</code>...<code>9</code></td>
 <td><code>int</code></td>
-<td>Constant: integers between 0 and 99, inclusive.</td>
+<td>Integers 0&ndash;9, inclusive.</td>
+</tr>
+<tr>
+<td><code>10</code>...<code>99</code></td>
+<td><code>int</code></td>
+<td>Integers 10&ndash;99, inclusive. <em>Select problems only.</em></td>
 </tr>
 <tr>
 <td><code>empty</code></td>
 <td><code>[t1]</code></td>
-<td>Constant: an empty list.</td>
+<td>An empty list.</td>
 </tr>
 <tr>
-<td><code>true false</code></td>
+<td><code>true</code></td>
 <td><code>bool</code></td>
-<td>Constant: Boolean literals.</td>
+<td>Boolean literal.</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td><code>bool</code></td>
+<td>Boolean literal.</td>
 </tr>
 <tr>
 <td><code>%</code></td>
@@ -390,7 +400,7 @@ This section contains a table of symbols in the DSL, along with their type signa
 
 ## Lambdas
 
-lambda returns an anonymous function that runs an input expression when called. For example, lambda functions can be passed as input functions to count, map, filter, and fold. The $-prefixed integers (e.g. `$0`, `$1`, … `$n`) represent [De Bruijn indices](https://en.wikipedia.org/wiki/De_Bruijn_index), where the index then refers to how many variable bindings you are from the variable you're referring to. For instance, `K x y = x` would be written as `(lambda (lambda $1))`.
+`lambda` returns an anonymous function that runs an input expression when called. For example, lambda functions can be passed as input functions to `count`, `map`, `filter`, and `fold`. $-prefixed integers (e.g. `$0`, `$1`, … `$n`) represent [De Bruijn indices](https://en.wikipedia.org/wiki/De_Bruijn_index), where the index refers to how many variable bindings you are from the variable you're referring to. For instance, `K x y = x` would be written as `(lambda (lambda $1))`.
 
 Some more examples of Lambda functions can be seen below:
 
@@ -398,9 +408,9 @@ Some more examples of Lambda functions can be seen below:
 | ------------------------------- | ------------------- | --------------------------------------------------------------- |
 | `(lambda 5)`                     | `(t1 → int)`         | Returns 5.                                                      |
 | `(lambda (+ $0 1))`              | `(int → int)`        | Increments an input value by 1.                                 |
-| `(lambda (\> $0 0))`             | `(int → int)`        | Returns whether or not the input value is greater than 0.       |
-| `(lambda (index 5 $0))`          | `(\[t1\] → t1)`      | Returns the 6th value (due to 0-indexing) in an input list.     |
-| `(lambda (lambda (index $1 $0)))` | `(int → \[t1\] → t1)` | Returns the *N-1*th value of an input list for input value *N*. |
+| `(lambda (> $0 0))`             | `(int → int)`        | Returns whether or not the input value is greater than 0.       |
+| `(lambda (index 5 $0))`          | `([t1] → t1)`      | Returns the 6th value (due to 0-indexing) in an input list.     |
+| `(lambda (lambda (index $1 $0)))` | `(int → [t1] → t1)` | Returns the *N-1*th value of an input list for input value *N*. |
 
 *Table 1.2 - Lambda Examples*
 
